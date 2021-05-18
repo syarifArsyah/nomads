@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\TravelPackegeRequest;
+use App\Http\Requests\Galleryrequest;
+use App\Models\Admin\gallery;
+use App\Models\Admin\gallery as Modelsgallery;
 use App\Models\Admin\Travelpackages;
-use App\Models\Travelpackages as ModelsTravelpackages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
-class TravelPackageController extends Controller
+class GalleriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +20,10 @@ class TravelPackageController extends Controller
      */
     public function index()
     {
-        $items = Travelpackages::all();
-        return view('pages.admin.travel-package.index',[
+        // $items = Modelsgalleri::all();
+        $items = Modelsgallery::with(['travel_package'])->get();
+
+        return view('pages.admin.gallery.index',[
             'items' => $items
         ]);
     }
@@ -31,7 +35,11 @@ class TravelPackageController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.travel-package.create');
+        $travel_packages = Travelpackages::all();
+
+        return view('pages.admin.gallery.create',[
+            'travel_packages' => $travel_packages
+        ]);
     }
 
     /**
@@ -40,15 +48,17 @@ class TravelPackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TravelPackegeRequest $request)
+    public function store(Galleryrequest $request)
     {
         $data = $request->all();
-        $data['slug']=Str::slug($request->title);
-
+        $data['image'] = $request->file('image')->store(
+            'assets/gallery','public'
+        );
         // dd($data);
-        Travelpackages::create($data);
 
-        return redirect()->route('travel-package.index')->with('success','Data berhasil di simpan');
+        Modelsgallery::create($data);
+
+        return redirect()->route('gallery.index')->with('success','Data berhasil di simpan');
         // return back()->with('success','Data berhasil di simpan');
 
     }
@@ -72,10 +82,12 @@ class TravelPackageController extends Controller
      */
     public function edit($id)
     {
-        $item = Travelpackages::findOrFail($id);
+        $item = Modelsgallery::findOrFail($id);
+        $travel_packages = Travelpackages::all();
 
-        return view('pages.admin.travel-package.edit',[
-            'item' => $item
+        return view('pages.admin.gallery.edit',[
+            'item' => $item,
+            'travel_packages' => $travel_packages
         ]);
     }
 
@@ -86,16 +98,21 @@ class TravelPackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TravelPackegeRequest $request, $id)
+    public function update(Galleryrequest $request, $id)
     {
         $data = $request->all();
-        $data['slug']=Str::slug($request->title);
+        $data['image'] = $request->file('image')->store(
+            'assets/gallery','public'
+        );
 
-        $item = Travelpackages::findOrFail($id);
-
+        $item = Modelsgallery::findOrFail($id);
+        // File::delete('image/');
+        
+        
         $item->update($data);
+        Storage::delete($item->image);
 
-        return redirect()->route('travel-package.index')->with('success','Data berhasil di update');
+        return redirect()->route('gallery.index')->with('success','Data berhasil di update');
     }
 
     /**
@@ -106,7 +123,7 @@ class TravelPackageController extends Controller
      */
     public function destroy($id)
     {
-        $item = Travelpackages::findOrFail($id);
+        $item = Modelsgallery::findOrFail($id);
         $item->delete();
         return redirect()->route('travel-package.index')->with('success','Data berhasil di hapus');
     }

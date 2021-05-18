@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,4 +17,9 @@ class Travelpackages extends Model
     protected $hidden=[
 
     ];
+
+    public function galleries()
+    {
+        return $this->hasMany(gallery::class,'travel_packages_id','id');
+    }
 }

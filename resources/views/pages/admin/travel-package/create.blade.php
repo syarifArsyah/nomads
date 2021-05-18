@@ -45,8 +45,7 @@
                     </div>
                     <div class="form-group">
                         <label for="about">About</label>
-                        <Textarea class="form-control d-block w-100 {{$errors->has('about')?'is-invalid':''}}" rows="5" name="about" placeholder="About">
-                            {{old('about')}}
+                        <Textarea class="form-control d-block w-100 {{$errors->has('about')?'is-invalid':''}}" rows="5" name="about" placeholder="About">{{old('about')}}
                         </Textarea>
                         @if ($errors->has('about'))
                             <div class="invalid-feedback">

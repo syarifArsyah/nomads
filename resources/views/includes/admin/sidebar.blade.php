@@ -40,7 +40,7 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="{{route('gallery.index')}}">
         <i class="fas fa-fw fa-images"></i>
         <span>Gallery</span>
       </a>
