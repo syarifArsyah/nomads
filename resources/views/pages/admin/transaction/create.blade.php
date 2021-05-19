@@ -10,6 +10,16 @@
         <h1 class="h3 mb-0 text-gray-800">Tambah Travel Packages</h1>
     </div>
 
+    {{-- @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
+
     <div class="row justify-content-center">
         <div class="card shadow col-lg-12">
             <div class="card-body">

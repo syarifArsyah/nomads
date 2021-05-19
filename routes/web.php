@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\TravelPackageController;
 use App\Http\Controllers\Admin\GalleriController;
+use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -32,11 +33,7 @@ Route::prefix('admin')
         ->name('admin.route');
         Route::resource('travel-package',TravelPackageController::class);
         Route::resource('gallery',GalleriController::class);
-        // Route::get('/travel-package',[TravelpackagesController::class,'index'])
-        // ->name('travel-package.index');
-        // Route::get('/travel-package/create',[TravelpackagesController::class,'create'])
-        // ->name('travel-package.create');
-        // Route::resource('travel-package', TravelpackageController::class);
+        Route::resource('transaction',TransactionController::class);
     });
 
 Auth::routes(['verify' => true]);
