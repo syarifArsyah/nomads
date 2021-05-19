@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\TravelPackageController;
 use App\Http\Controllers\Admin\GalleriController;
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,9 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('admin/home',[HomeController::class,'handleAdmin'])->name('admin.route')->middleware('admin');
+Route::get('/detail/{slug}',[DetailController::class,'index'])->name('detail');
+Route::get('/checkout',[CheckoutController::class],'index')->name('checkout');
+Route::get('/checkout/success',[CheckoutController::class],'success')->name('checkout-success');
 
 Route::prefix('admin')
     // ->namespace('Admin')

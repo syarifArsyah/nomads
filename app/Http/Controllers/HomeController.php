@@ -25,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $items = Travelpackages::with(['galleries'])->get();
+        return view('home',[
+            'items' => $items
+        ]);
     }
 
     public function handleAdmin()
