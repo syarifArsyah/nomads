@@ -41,7 +41,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$item->travel_package->title}}</td>
-                        <td>{{$item->user->name}}</td>
+                        <td>{{$item->username}}</td>
                         <td>{{$item->additional_visa}}</td>
                         <td>{{$item->transaction_total}}</td>
                         <td>{{$item->transaction_status}}</td>

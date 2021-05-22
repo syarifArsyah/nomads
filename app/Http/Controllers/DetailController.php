@@ -17,6 +17,8 @@ class DetailController extends Controller
         $item = Travelpackages::with([
             'galleries'
         ])->where('slug',$slug)->firstOrFail();
+
+        // dd($item);
         return view('pages.detail',[
             'item' => $item
         ]);

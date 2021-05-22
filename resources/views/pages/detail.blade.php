@@ -55,7 +55,8 @@
 
                         <h2>Tentang Wisata</h2>
                         <p>
-                            {{$item->about}}
+                            {{-- {{$item->about}} --}}
+                            {!! $item->about !!}
                         </p>
                         <div class="features row">
                             <div class="col-md-4 details">
@@ -99,8 +100,8 @@
                             <tr>
                                 <th width="50%">Date of Departure</th>
                                 <td width="50%" class="trxt-right">
-                                    {{-- 22 Agustus,2019 --}}
-                                    {{$item->departure_date}}
+                                    {{-- {{$item->departure_date}} --}}
+                                    {{\Carbon\carbon::create($item->departure_date)->format('F n,Y')}}
                                 </td>
                             </tr>
                             <tr>
@@ -118,15 +119,25 @@
                             <tr>
                                 <th width="50%">Price</th>
                                 <td width="50%" class="trxt-right">
-                                    ${{$item->price}} / person
+                                    ${{$item->price}},00 / person
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="join-container">
-                        <a href="#" class="btn btn-block btn-join-now mt-3 py-2">
-                            Join Now
-                        </a>
+                        @auth
+                            <form action="{{route('checkout_process',$item->id)}}" method="POST">
+                                @csrf
+                                <button class="btn btn-block btn-join-now mt-3 py-2" type="submit">
+                                    Join Now
+                                </button>
+                            </form>
+                        @endauth
+                        @guest
+                            <a href="{{route('login')}}" class="btn btn-block btn-join-now mt-3 py-2">
+                                Login or register to Join
+                            </a>
+                        @endguest
                     </div>
                 </div>
             </div>
